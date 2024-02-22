@@ -5,7 +5,6 @@ import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
-import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -65,34 +63,38 @@ public class EmployeeServiceImpl implements EmployeeService {
         //3、返回实体对象
         return employee;
     }
+
     /**
      * 新增员工
+     *
      * @param employeeDTO
      * @return
      */
     @Override
     public void save(EmployeeDTO employeeDTO) {
-        System.out.println("当前线程的id："+Thread.currentThread().getId());
+        System.out.println("当前线程的id：" + Thread.currentThread().getId());
         Employee employee = new Employee();
         //对象属性拷贝
-        BeanUtils.copyProperties(employeeDTO,employee);
+        BeanUtils.copyProperties(employeeDTO, employee);
         //账号状态,默认正常1,0锁定
         employee.setStatus(StatusConstant.ENABLE);
         //密码，默认123456
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
         //创建时间
-        employee.setCreateTime(LocalDateTime.now());
-        //更新时间
-        employee.setUpdateTime(LocalDateTime.now());
-        //创建人
-        //通过线程存储空间获取当前用户id
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+        //        公共属性由AutoFill统一赋值，不需要自己赋值
+//        employee.setCreateTime(LocalDateTime.now());
+//        //更新时间
+//        employee.setUpdateTime(LocalDateTime.now());
+//        //创建人
+//        //通过线程存储空间获取当前用户id
+//        employee.setCreateUser(BaseContext.getCurrentId());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.insert(employee);
     }
 
     /**
      * 分页查询
+     *
      * @param employeePageQueryDTO
      * @return
      */
@@ -103,11 +105,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
         long total = page.getTotal();
         List<Employee> records = page.getResult();
-        return new PageResult(total,records);
+        return new PageResult(total, records);
     }
 
     /**
      * 根据id查询员工信息
+     *
      * @param id
      * @return
      */
@@ -121,18 +124,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 编辑员工信息
+     *
      * @param employeeDTO
      */
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeDTO,employee);
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+        BeanUtils.copyProperties(employeeDTO, employee);
+        //        公共属性由AutoFill统一赋值，不需要自己赋值
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.update(employee);
     }
 
     /**
      * 启用禁用员工账号
+     *
      * @param status
      * @param id
      */

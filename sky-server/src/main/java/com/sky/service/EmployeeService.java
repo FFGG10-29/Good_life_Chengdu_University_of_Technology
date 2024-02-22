@@ -10,6 +10,7 @@ public interface EmployeeService {
 
     /**
      * 员工登录
+     *
      * @param employeeLoginDTO
      * @return
      */
@@ -17,7 +18,9 @@ public interface EmployeeService {
 
     void save(EmployeeDTO employeeDTO);
 
-    /**返回员工参数(分页查询)
+    /**
+     * 返回员工参数(分页查询)
+     *
      * @param employeePageQueryDTO
      * @return
      */
@@ -25,6 +28,7 @@ public interface EmployeeService {
 
     /**
      * 启用禁用员工账号
+     *
      * @param status
      * @param id
      */
@@ -32,6 +36,7 @@ public interface EmployeeService {
 
     /**
      * 根据id查询员工信息
+     *
      * @param id
      * @return
      */
@@ -39,6 +44,7 @@ public interface EmployeeService {
 
     /**
      * 编辑员工信息
+     *
      * @param employeeDTO
      */
     void update(EmployeeDTO employeeDTO);
