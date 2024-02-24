@@ -11,3 +11,8 @@ sky:
     access-key-id: LTAI5t6jLpp6p4maLPretwHE
     access-key-secrete: 7kD3sDI02ddrf3czWhjRCcso3xRvfA
     bucket-name: ggbond745
+  redis:
+    host: localhost
+    port: 6379
+    password: gjf74574
+    database: 0
